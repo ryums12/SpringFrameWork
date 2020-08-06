@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: url
+#    username: root
+#    password: password
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017/example_member
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: mapper/*.xml
+
