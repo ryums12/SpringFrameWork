@@ -17,8 +17,6 @@ public class CustomLoginFailureHandler implements AuthenticationFailureHandler {
 
         String exceptionMessage = exception.getMessage();
 
-        System.out.println("ㄷㄷㄷㅈ : " + exceptionMessage);
-
         if(exceptionMessage.equals("Member Not Found")) {
             request.setAttribute("msg", "존재하지 않는 아이디입니다. 아이디를 확인 해주십시오.");
         } else if(exceptionMessage.equals("Bad credentials")) {

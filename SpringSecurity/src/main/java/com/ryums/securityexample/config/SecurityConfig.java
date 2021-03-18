@@ -1,6 +1,7 @@
 package com.ryums.securityexample.config;
 
 import com.ryums.securityexample.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,21 +12,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
-
-    @Autowired
     private AuthenticationFailureHandler loginFailureHandler;
-
-    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+    private AccessDeniedHandler accessDeniedHandler;
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -49,10 +47,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .defaultSuccessUrl("/admin/main")
                     .and()
 
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .invalidateHttpSession(true)
+                    .logoutSuccessHandler(logoutSuccessHandler)
+                    .and()
+
                     .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler)
                     .and()
 
+                    .sessionManagement()
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(false)
+                    .expiredUrl("/login")
+                    .and()
         ;
     }
 

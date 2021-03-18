@@ -2,20 +2,18 @@ package com.ryums.securityexample.config;
 
 import com.ryums.securityexample.config.custom.CustomAccessDeniedHandler;
 import com.ryums.securityexample.config.custom.CustomLoginFailureHandler;
+import com.ryums.securityexample.config.custom.CustomLogoutSuccessHandler;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 @Configuration
 public class BeanConfig {
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
@@ -23,7 +21,20 @@ public class BeanConfig {
     }
 
     @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public ModelMapper modelMapper() { return new ModelMapper(); }
 }

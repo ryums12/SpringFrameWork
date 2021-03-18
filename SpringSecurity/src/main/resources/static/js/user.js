@@ -16,7 +16,7 @@ const fncCheckIpDuped  = () => {
         id.focus();
     } else {
         $.ajax({
-            url: "/check/id.do",
+            url: "/check/id",
             type : 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_csrf"]').attr('content')
