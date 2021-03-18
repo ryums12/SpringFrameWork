@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/personal?serverTimezone=Asia/Seoul
+    url: url
     username: root
-    password: archivsoft
+    password: pwd
 
 mybatis:
   config-location: classpath:mybatis-config.xml
