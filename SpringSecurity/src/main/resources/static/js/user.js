@@ -6,7 +6,7 @@ $(document).ready( () => {
     }
 });
 
-const fncCheckIpDuped  = () => {
+function fncCheckIpDuped () {
     const id = document.getElementById('login-id')
         , dupChecked = document.getElementById('dup-check')
         , data = {id: id.value};
@@ -33,9 +33,9 @@ const fncCheckIpDuped  = () => {
             }
         });
     }
-};
+}
 
-const fncCheckSignValue = () => {
+function fncCheckSignValue () {
 
     const id = document.getElementById('login-id')
         , dupChecked = document.getElementById('dup-check').value;
@@ -44,17 +44,30 @@ const fncCheckSignValue = () => {
         alert("중복되는 아이디인지 확인해 주십시오.");
         id.focus();
         return false;
-    } else if(dupChecked == 'N') {
+    } else if(dupChecked === 'N') {
         alert("중복되는 아이디입니다. 다시 입력해 주십시오.");
         id.focus();
         return false;
     } else {
         return confirm("가입 하시겠습니까?");
     }
-};
+}
 
-const fncAlertErrMsg  = (element) => {
+function fncAlertErrMsg (element) {
     if(element.value != null) {
         alert(element.value);
     }
-};
+}
+
+function onClickGoogleLogin (e) {
+    //구글 인증 서버로 인증코드 발급 요청
+
+    const clientId = "clientId";
+    let url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + clientId
+            + "&redirect_uri=http://localhost:8082/login/auth/google"
+            + "&response_type=code"
+            + "&scope=email%20profile%20openid"
+            + "&access_type=offline";
+
+    window.location.replace(url);
+}

@@ -1,11 +1,13 @@
 # Spring Security Example
 
-제목 그대로 Spring security를 통해 회원가입과 로그인만을 구현한 예제
+Spring Security Template
 
 -**Setting**
  - Spring boot
  - thymeleaf
- - My sql
+ - Mysql
+ - JPA
+ - OAuth
 
 -**MySql Table**
 
@@ -17,7 +19,8 @@
     
 -**Templates from**
  - 로그인 : https://colorlib.com/wp/template/login-form-16/
-    
-    
+  
+-**OAuth**
+ - 구글 참조 : https://gdtbgl93.tistory.com/182
 
 
