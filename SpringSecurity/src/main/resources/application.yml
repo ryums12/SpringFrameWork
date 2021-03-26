@@ -5,9 +5,5 @@ spring:
     username: root
     password: pwd
 
-mybatis:
-  config-location: classpath:mybatis-config.xml
-  mapper-locations: mapper/*.xml
-
 server:
   port: 8082
