@@ -33,6 +33,12 @@ public class UserController {
     final static String GOOGLE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/token";
     final static String GOOGLE_REVOKE_TOKEN_BASE_URL = "https://oauth2.googleapis.com/revoke";
 
+    @Value("${oauth.client}")
+    private String clientId;
+
+    @Value("${oauth.secret}")
+    private String clientSecret;
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -74,8 +80,8 @@ public class UserController {
             throws JsonProcessingException {
 
         //OAuth 웹클라이언트 ID/비밀
-        String clientId = "clientId";
-        String clientSecret = "clientSecret";
+//        String clientId = "clientId";
+//        String clientSecret = "clientSecret";
 
         //HTTP Request를 위한 RestTemplate
         RestTemplate restTemplate = new RestTemplate();

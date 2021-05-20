@@ -1,15 +1,7 @@
-$(document).ready( () => {
-    const errMsg = document.getElementById('err-msg');
-
-    if(errMsg != null) {
-        fncAlertErrMsg(errMsg);
-    }
-});
-
 function fncCheckIpDuped () {
-    const id = document.getElementById('login-id')
-        , dupChecked = document.getElementById('dup-check')
-        , data = {id: id.value};
+    const id            = document.getElementById("login-id")
+        , dupChecked    = document.getElementById('dup-check')
+        , data          = { id: id.value };
 
     if(!id.value) {
         alert("아이디를 입력해 주십시오.");
@@ -37,8 +29,8 @@ function fncCheckIpDuped () {
 
 function fncCheckSignValue () {
 
-    const id = document.getElementById('login-id')
-        , dupChecked = document.getElementById('dup-check').value;
+    const id            = document.getElementById('login-id')
+        , dupChecked    = document.getElementById('dup-check').value;
 
     if(!dupChecked) {
         alert("중복되는 아이디인지 확인해 주십시오.");
@@ -53,15 +45,8 @@ function fncCheckSignValue () {
     }
 }
 
-function fncAlertErrMsg (element) {
-    if(element.value != null) {
-        alert(element.value);
-    }
-}
-
-function onClickGoogleLogin (e) {
+function onClickGoogleLogin () {
     //구글 인증 서버로 인증코드 발급 요청
-
     const clientId = "clientId";
     let url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + clientId
             + "&redirect_uri=http://localhost:8082/login/auth/google"

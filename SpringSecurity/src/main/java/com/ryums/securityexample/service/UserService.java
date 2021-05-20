@@ -32,15 +32,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findById(id);
-        UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getName()));
-
-        if(userDTO != null) {
+        if (userEntity != null) {
+            UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getName()));
             return new UserMember(userDTO.getId(), userDTO.getPwd(), Role.ADMIN.getName(), authorities);
         } else {
-            throw  new InternalAuthenticationServiceException("Member Not Found");
+            throw new InternalAuthenticationServiceException("Member Not Found");
         }
     }
 
