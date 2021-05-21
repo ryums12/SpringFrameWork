@@ -36,8 +36,9 @@ public class UserService implements UserDetailsService {
         if (userEntity != null) {
             UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getName()));
-            return new UserMember(userDTO.getId(), userDTO.getPwd(), Role.ADMIN.getName(), authorities);
+            Role userRole = Role.values()[Integer.parseInt(String.valueOf(userDTO.getGrade()))];
+            authorities.add(new SimpleGrantedAuthority(userRole.name()));
+            return new UserMember(userDTO.getId(), userDTO.getPwd(), userDTO.getGrade(), userRole.getName(), authorities);
         } else {
             throw new InternalAuthenticationServiceException("Member Not Found");
         }

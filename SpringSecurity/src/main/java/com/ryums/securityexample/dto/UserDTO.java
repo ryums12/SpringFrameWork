@@ -17,14 +17,15 @@ public class UserDTO {
     private Long memberIdx;
     private String id;
     private String pwd;
+    private char grade;
 
     public UserEntity toEntity() {
-        UserEntity builder = UserEntity.builder()
+
+        return UserEntity.builder()
                 .memberIdx(memberIdx)
                 .id(id)
                 .pwd(pwd)
+                .grade(grade)
                 .build();
-
-        return builder;
     }
 }
