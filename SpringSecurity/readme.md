@@ -15,7 +15,7 @@ Spring Security Template
         member_idx int PRIMARY KEY AUTO_INCREMENT,
         id varchar(30),
         pwd varchar(255),
-        char(1)
+        grade char(1)
     )
     
 -**Templates from**
