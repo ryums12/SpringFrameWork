@@ -45,6 +45,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void createMember(UserDTO userDTO) {
+        userDTO.setGrade('1');
         userDTO.setPwd(passwordEncoder.encode((CharSequence) userDTO.getPwd()));
         userRepository.save(userDTO.toEntity());
     }
