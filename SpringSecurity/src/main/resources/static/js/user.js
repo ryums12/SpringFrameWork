@@ -47,12 +47,14 @@ function fncCheckSignValue () {
 
 function onClickGoogleLogin () {
     //구글 인증 서버로 인증코드 발급 요청
-    const clientId = "clientId";
-    let url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + clientId
-            + "&redirect_uri=http://localhost:8082/login/auth/google"
-            + "&response_type=code"
-            + "&scope=email%20profile%20openid"
-            + "&access_type=offline";
+    // const clientId = "client id";
+    // let url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + clientId
+    //         + "&redirect_uri=http://localhost:8081/login/oauth/google"
+    //         + "&response_type=code"
+    //         + "&scope=email%20profile%20openid"
+    //         + "&access_type=offline";
+
+    let url = "/oauth2/authorization/google";
 
     window.location.replace(url);
 }

@@ -1,15 +1,14 @@
 package com.ryums.securityexample.entity;
 
+import com.ryums.securityexample.domain.Role;
 import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Builder
 @Table(name = "example_member")
 public class UserEntity {
 
@@ -19,4 +18,31 @@ public class UserEntity {
     private String id;
     private String pwd;
     private char grade;
+
+    @Enumerated(EnumType.STRING)
+    @Transient
+    private Role role;
+
+    @Transient
+    private String name;
+
+    @Transient
+    private String email;
+
+    @Transient
+    private String picture;
+
+    @Builder
+    public UserEntity(Long memberIdx, String id, String pwd, String name, String email, String picture, char grade, Role role) {
+        this.memberIdx = memberIdx;
+        this.id = id;
+        this.pwd = pwd;
+        this.grade = grade;
+
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+
+        this.role = role;
+    }
 }

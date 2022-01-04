@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -31,9 +32,10 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        UserEntity userEntity = userRepository.findById(id);
+        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
 
-        if (userEntity != null) {
+        if (optionalUserEntity.isPresent()) {
+            UserEntity userEntity = optionalUserEntity.get();
             UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
             List<GrantedAuthority> authorities = new ArrayList<>();
             Role userRole = Role.values()[Integer.parseInt(String.valueOf(userDTO.getGrade()))];
@@ -45,7 +47,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void createMember(UserDTO userDTO) {
-        userDTO.setGrade('1');
+        userDTO.setGrade('2');
         userDTO.setPwd(passwordEncoder.encode((CharSequence) userDTO.getPwd()));
         userRepository.save(userDTO.toEntity());
     }

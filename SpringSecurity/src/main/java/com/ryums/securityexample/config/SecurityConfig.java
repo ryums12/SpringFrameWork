@@ -1,8 +1,9 @@
 package com.ryums.securityexample.config;
 
+import com.ryums.securityexample.service.OauthService;
 import com.ryums.securityexample.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,13 +11,19 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@AllArgsConstructor
+
+
 @Configuration
+@AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -25,48 +32,60 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private LogoutSuccessHandler logoutSuccessHandler;
     private AccessDeniedHandler accessDeniedHandler;
     private PasswordEncoder passwordEncoder;
+    private OAuth2AuthorizedClientRepository authorizedClientRepository;
+    private OauthService oauthService;
 
     @Override
     public void configure(WebSecurity security) throws Exception {
         security.ignoring().antMatchers("/css/**", "/js/**", "/img/**","/font/**");
+        security.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                    .authorizeRequests()
-                        .antMatchers("/admin/**").authenticated()
-                        .antMatchers("/**").permitAll()
-                        .and()
+                .authorizeRequests()
+                    .antMatchers("/admin/**").authenticated()
+                    .antMatchers("/**").permitAll()
+                .and()
 
-                    .formLogin()
-                        .loginPage("/login")
-                        .failureHandler(loginFailureHandler)
-                        .usernameParameter("id")
-                        .passwordParameter("pwd")
-                        .defaultSuccessUrl("/admin/main")
+                .formLogin()
+                    .loginPage("/")
+                    .failureHandler(loginFailureHandler)
+                    .usernameParameter("id")
+                    .passwordParameter("pwd")
+                    .defaultSuccessUrl("/admin/main")
+                .and()
+
+                .oauth2Login()
+                    .userInfoEndpoint()
+                        .userService(oauthService)
                     .and()
+                .and()
 
-                    .logout()
+                .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .invalidateHttpSession(true)
                     .logoutSuccessHandler(logoutSuccessHandler)
-                    .and()
+                .and()
 
-                    .exceptionHandling()
+                .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler)
-                    .and()
+                .and()
 
-                    .sessionManagement()
+                .sessionManagement()
                     .maximumSessions(1)
                     .maxSessionsPreventsLogin(false)
-                    .expiredUrl("/login")
-                    .and()
+                    .expiredUrl("/")
         ;
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+    }
+
+    public AuthorizationRequestRepository<OAuth2AuthorizationRequest> authorizationRequestRepository() {
+        return new HttpSessionOAuth2AuthorizationRequestRepository();
     }
 }

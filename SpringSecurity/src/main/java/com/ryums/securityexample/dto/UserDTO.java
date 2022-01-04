@@ -19,13 +19,20 @@ public class UserDTO {
     private String pwd;
     private char grade;
 
+    private String name;
+    private String email;
+    private String picture;
+
     public UserEntity toEntity() {
 
         return UserEntity.builder()
-                .memberIdx(memberIdx)
-                .id(id)
-                .pwd(pwd)
-                .grade(grade)
+//                .memberIdx(memberIdx)
+//                .id(id)
+//                .pwd(pwd)
+//                .grade(grade)
+                .name(name)
+                .email(email)
+                .picture(picture)
                 .build();
     }
 }

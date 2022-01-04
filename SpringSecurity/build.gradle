@@ -24,6 +24,7 @@ dependencies {
     implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.4'
     implementation group: 'com.querydsl', name: 'querydsl-apt', version: '4.1.4'
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client', version: '2.4.2'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
 
